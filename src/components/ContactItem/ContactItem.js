@@ -1,23 +1,20 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { remove } from 'redux/slice';
-import { useDispatch } from 'react-redux';
+import { useDeleteContactMutation } from '../../services/contacts-api';
 import { Item, Contact, Button } from './ContactItem.styled';
 
-const ContactItem = ({ name, number, id }) => {
-  const dispatch = useDispatch();
-
-  // Удаление контакта
-  const deleteContactItem = contactItemId => {
-    dispatch(remove(contactItemId));
-  };
+const ContactItem = ({ id, name, number }) => {
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
 
   return (
     <Item>
       <Contact>
         {name}: {number}
       </Contact>
-      <Button type="button" onClick={() => deleteContactItem(id)}>
+      <Button
+        type="button"
+        onClick={() => deleteContact(id)}
+        disabled={isDeleting}
+      >
         Delete
       </Button>
     </Item>
