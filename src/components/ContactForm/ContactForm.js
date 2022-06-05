@@ -11,7 +11,8 @@ function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [createContact, { isLoading }] = useCreateContactMutation();
-  const contactState = contactsApi.endpoints.getContacts.useQueryState().data;
+  const useContactState =
+    contactsApi.endpoints.getContacts.useQueryState().data;
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -36,7 +37,7 @@ function ContactForm() {
       number: e.currentTarget.elements.number.value,
     };
 
-    const dublicateName = contactState.find(contact => {
+    const dublicateName = useContactState.find(contact => {
       return contact.name.toLowerCase() === name.toLowerCase();
     });
 
